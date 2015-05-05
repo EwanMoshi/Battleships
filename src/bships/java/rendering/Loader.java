@@ -1,4 +1,4 @@
-package RenderEngine;
+package bships.java.rendering;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;

@@ -1,16 +1,17 @@
-package GameLoop;
+package bships.java.gameloop;
 
 import org.lwjgl.opengl.Display;
 
+import bships.java.rendering.DisplayManager;
+import bships.java.rendering.Loader;
+import bships.java.rendering.RawModel;
+import bships.java.rendering.Renderer;
 
 
 
 
 
-import RenderEngine.DisplayManager;
-import RenderEngine.Loader;
-import RenderEngine.RawModel;
-import RenderEngine.Renderer;
+
 
 public class MainGameLoop {
 

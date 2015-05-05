@@ -1,4 +1,4 @@
-package RenderEngine;
+package bships.java.rendering;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.ContextAttribs;

@@ -1,4 +1,4 @@
-package model;
+package bships.java.model;
 
 public class Ship {
 

@@ -1,4 +1,4 @@
-package RenderEngine;
+package bships.java.rendering;
 
 public class RawModel {
 

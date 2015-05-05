@@ -1,4 +1,4 @@
-package RenderEngine;
+package bships.java.rendering;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
