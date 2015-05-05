@@ -2,12 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/u/students/moshiewan/workspace/Battleships/lib/jars/lwjgl.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/am/state-opera/home1/moshiewan/workspace/Battleships/lib/lwjgl-2.9.3/native/linux"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/u/students/moshiewan/workspace/Battleships/lib/jars/lwjgl_util.jar"/>
-	<classpathentry kind="lib" path="/u/students/moshiewan/workspace/Battleships/lib/jars/slick-util.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LWJGL"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
