@@ -1,4 +1,4 @@
-package bships.java.rendering;
+package main.java.rendering;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;

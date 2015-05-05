@@ -1,4 +1,4 @@
-package bships.java.model;
+package main.java.model;
 
 public class Board {
 

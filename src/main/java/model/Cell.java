@@ -1,4 +1,4 @@
-package bships.java.model;
+package main.java.model;
 
 /**
  * Represents a single tile on the board. It may or may not have a piece of ship on it.

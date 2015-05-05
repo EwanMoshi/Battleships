@@ -1,11 +1,11 @@
-package bships.java.gameloop;
+package main.java.gameloop;
 
 import org.lwjgl.opengl.Display;
 
-import bships.java.rendering.DisplayManager;
-import bships.java.rendering.Loader;
-import bships.java.rendering.RawModel;
-import bships.java.rendering.Renderer;
+import main.java.rendering.DisplayManager;
+import main.java.rendering.Loader;
+import main.java.rendering.RawModel;
+import main.java.rendering.Renderer;
 
 
 
