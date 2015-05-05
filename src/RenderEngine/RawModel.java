@@ -5,9 +5,9 @@ public class RawModel {
 	private int vaoID;
 	private int vertexCount;
 	
-	public RawModel(int vaoID, int vertexCount) {
+	public RawModel(int vaoID, int VertexCount) {
 		this.vaoID = vaoID;
-		this.vertexCount = vertexCount;
+		this.vertexCount = VertexCount;
 	}
 	
 	
