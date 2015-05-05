@@ -1,6 +1,7 @@
 package RenderEngine;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +19,15 @@ public class Loader {
 	/**
 	 * Take positional data about the model, store in a VAO and return information as RawModel
 	 * @param positions
+	 * @param indices
 	 * @return
 	 */
-	public RawModel loadToVAO(float[] positions) {
+	public RawModel loadToVAO(float[] positions, int[] indices) {
 		int vaoID = createVAO();
-		storeDataInAttributeList(0,positions);
+		bindIndicesBuffer(indices); //bind the indices buffer to the indices
+		storeDataInAttributeList(0,positions); 
 		unbindVAO();
-		return new RawModel(vaoID,positions.length/3); //divide by 3 because each vertex has 3 floats
+		return new RawModel(vaoID,indices.length); 
 	}
 	
 	/**
@@ -72,6 +75,23 @@ public class Loader {
 		buffer.flip(); //prepare the buffer to be read from
 		return buffer;
 	}
+	
+	
+	private void bindIndicesBuffer(int[] indices) {
+		int vboID = GL15.glGenBuffers();
+		vbos.add(vboID);
+		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboID);
+		IntBuffer buffer = storeDataInIntBuffer(indices);
+		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
+	}
+	
+	private IntBuffer storeDataInIntBuffer(int[] data) {
+		IntBuffer buffer = BufferUtils.createIntBuffer(data.length); //create empty int buffer
+		buffer.put(data); //place the data into the buffer
+		buffer.flip(); //prepare the buffer to be read from
+		return buffer;
+	}
+	
 	
 	/**
 	 * Loop through all the VAOs and VBOs and delete all the buffers

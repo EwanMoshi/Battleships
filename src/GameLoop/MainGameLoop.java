@@ -21,9 +21,19 @@ public class MainGameLoop {
 		Renderer renderer = new Renderer();
 		
 		/* This is a test, use different verties later for different models  TODO:Read from file */
-		float[] vertices = { -0.5f, 0.5f, 0f, -0.5f, -0.5f, 0f, 0.5f, -0.5f, 0f, 0.5f, -0.5f, 0f, 0.5f, 0.5f, 0f, -0.5f, 0.5f, 0f};
+		float[] vertices = {
+				-0.5f, 0.5f, 0f, //V0
+				-0.5f, -0.5f, 0f, //V1
+				0.5f, -0.5f, 0f, //V2
+				0.5f, 0.5f, 0f, //V3
+		};
 		
-		RawModel model = loader.loadToVAO(vertices);
+		int[] indices = {
+				0,1,3, //Top left triangle (V0,V1,V3)
+				3,1,2 //Bottom right Triangle (V3,V1,V2)
+		};
+		
+		RawModel model = loader.loadToVAO(vertices,indices);
 		
 		while(!Display.isCloseRequested()) {
 			renderer.prepare();
