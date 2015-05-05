@@ -31,7 +31,7 @@ public class DisplayManager {
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT));
 			Display.create(new PixelFormat(), attribs);
-			Display.setTitle("BattkeShuos"); //set the titel of the display
+			Display.setTitle("BattleShips"); //set the title of the display
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
