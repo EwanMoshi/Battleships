@@ -38,12 +38,12 @@ public class MainGameLoop {
 		Entity entity = new Entity(staticModel, new Vector3f(0,-5,-30),0,0,0,1);
 		Light light = new Light(new Vector3f(0,0,-20), new Vector3f(1,1,1));
 		
-		Camera camera = new Camera();
-		
+		Camera camera = new Camera(entity);
 		MasterRenderer renderer = new MasterRenderer();
 		
+		
 		while(!Display.isCloseRequested()) {
-			entity.increaseRotation(0, 0.5f, 0);
+			//entity.increaseRotation(0, 0.5f, 0);
 			camera.move();
 					
 			renderer.processEntity(entity);
