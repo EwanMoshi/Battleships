@@ -10,6 +10,7 @@ import main.java.models.RawModel;
 import main.java.models.TexturedModel;
 import main.java.rendering.DisplayManager;
 import main.java.rendering.Loader;
+import main.java.rendering.MasterRenderer;
 import main.java.rendering.OBJLoader;
 import main.java.rendering.Renderer;
 import main.java.shaders.StaticShader;
@@ -22,9 +23,7 @@ public class MainGameLoop {
 		DisplayManager.createDisplay();
 
 		Loader loader = new Loader();
-		StaticShader shader = new StaticShader();
 
-		Renderer renderer = new Renderer(shader);
 
 		/* This is a test, use different verties later for different models  TODO:Read from file */
 		RawModel model = OBJLoader.loadObjModel("ship", loader);
@@ -41,19 +40,18 @@ public class MainGameLoop {
 		
 		Camera camera = new Camera();
 		
+		MasterRenderer renderer = new MasterRenderer();
+		
 		while(!Display.isCloseRequested()) {
 			entity.increaseRotation(0, 0.5f, 0);
 			camera.move();
-			renderer.prepare();
-			shader.start();
-			shader.loadLight(light);
-			shader.loadViewMatrix(camera);
-			renderer.render(entity,shader);
-			shader.stop();
+			
+			renderer.processEntity(entity);
+			
+			renderer.render(light, camera);
 			DisplayManager.updateDisplay();
 		}
-
-		shader.cleanUp(); //clean up the shaders
+		renderer.cleanUp(); //clean up the renderer
 		loader.cleanUp(); //clean up all the VAOs and VBOs
 		DisplayManager.closeDisplay(); //close display when game loop ends
 	}
