@@ -25,6 +25,9 @@ public class Renderer {
 	
 	
 	public Renderer(StaticShader shader) {
+		/*Prevent polygons not facing the camera to not be rendered */
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glCullFace(GL11.GL_BACK);
 		createProjectionMatrix();
 		shader.start();
 		shader.loadProjectionMatrix(projectionMatrix);
