@@ -45,7 +45,7 @@ public class MainGameLoop {
 		while(!Display.isCloseRequested()) {
 			entity.increaseRotation(0, 0.5f, 0);
 			camera.move();
-			
+					
 			renderer.processEntity(entity);
 			
 			renderer.render(light, camera);
