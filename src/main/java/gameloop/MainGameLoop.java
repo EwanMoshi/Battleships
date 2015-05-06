@@ -2,16 +2,13 @@ package main.java.gameloop;
 
 import org.lwjgl.opengl.Display;
 
+import main.java.models.RawModel;
+import main.java.models.TexturedModel;
 import main.java.rendering.DisplayManager;
 import main.java.rendering.Loader;
-import main.java.rendering.RawModel;
 import main.java.rendering.Renderer;
 import main.java.shaders.StaticShader;
-
-
-
-
-
+import main.java.textures.ModelTexture;
 
 
 public class MainGameLoop {
@@ -35,13 +32,22 @@ public class MainGameLoop {
 				0,1,3, //Top left triangle (V0,V1,V3)
 				3,1,2 //Bottom right Triangle (V3,V1,V2)
 		};
+		
+		float[] textureCoords = {
+				0,0, //V0
+				0,1, //V1
+				1,1, //V2
+				1,0 //V3
+		};
 
-		RawModel model = loader.loadToVAO(vertices,indices);
-
+		RawModel model = loader.loadToVAO(vertices,indices,textureCoords);
+		ModelTexture texture = new ModelTexture(loader.loadTexture("texture"));
+		TexturedModel textureModel = new TexturedModel(model, texture);
+		
 		while(!Display.isCloseRequested()) {
 			renderer.prepare();
 			shader.start();
-			renderer.render(model);
+			renderer.render(textureModel);
 			shader.stop();
 			DisplayManager.updateDisplay();
 		}
