@@ -32,11 +32,12 @@ public class Loader {
 	 * @param indices
 	 * @return
 	 */
-	public RawModel loadToVAO(float[] positions, int[] indices, float[] textureCoords) {
+	public RawModel loadToVAO(float[] positions, int[] indices, float[] textureCoords, float[] normals) {
 		int vaoID = createVAO();
 		bindIndicesBuffer(indices); //bind the indices buffer to the indices
 		storeDataInAttributeList(0,3,positions); 
 		storeDataInAttributeList(1,2,textureCoords); 
+		storeDataInAttributeList(2,3,normals); //first parameter is position in the VAO, second is the type of Vector (3d for this one)
 		unbindVAO();
 		return new RawModel(vaoID,indices.length); 
 	}

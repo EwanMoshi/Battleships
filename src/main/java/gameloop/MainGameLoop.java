@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import main.java.entities.Camera;
 import main.java.entities.Entity;
+import main.java.entities.Light;
 import main.java.models.RawModel;
 import main.java.models.TexturedModel;
 import main.java.rendering.DisplayManager;
@@ -32,7 +33,8 @@ public class MainGameLoop {
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Wood 1"));
 		TexturedModel staticModel = new TexturedModel(model, texture);
 		
-		Entity entity = new Entity(staticModel, new Vector3f(0,-15,-50),0,0,0,1);
+		Entity entity = new Entity(staticModel, new Vector3f(0,-10,-50),0,0,0,1);
+		Light light = new Light(new Vector3f(0,0,-20), new Vector3f(1,1,1));
 		
 		Camera camera = new Camera();
 		
@@ -41,6 +43,7 @@ public class MainGameLoop {
 			camera.move();
 			renderer.prepare();
 			shader.start();
+			shader.loadLight(light);
 			shader.loadViewMatrix(camera);
 			renderer.render(entity,shader);
 			shader.stop();

@@ -48,16 +48,24 @@ public class Renderer {
 		TexturedModel model = entity.getModel();
 		RawModel rawModel = model.getRawModel();
 		GL30.glBindVertexArray(rawModel.getVaoID());
+		
+		/*Enable the attributes in the VAO */
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);
+		GL20.glEnableVertexAttribArray(2);
+
 		Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(), entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
 		shader.loadTransformationMatrix(transformationMatrix);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getTexture().getID());
 		GL11.glDrawElements(GL11.GL_TRIANGLES,  rawModel.getVertexCount(), GL11.GL_UNSIGNED_INT,0);
 		//GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, model.getVertexCount()); //render
+		
+		/*Disable all the attributes in the VAO */
 		GL20.glDisableVertexAttribArray(0);
 		GL20.glDisableVertexAttribArray(1);
+		GL20.glDisableVertexAttribArray(2);
+
 		GL30.glBindVertexArray(0);
 	}
 	
