@@ -18,10 +18,6 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 
 public class EntityRenderer {
-
-	private static final float FOV = 70;
-	private static final float NEAR_PLANE = 0.1f;
-	private static final float FAR_PLANE = 1000; //how far you can see into the distance
 	
 	
 	private StaticShader shader;

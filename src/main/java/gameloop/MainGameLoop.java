@@ -28,8 +28,6 @@ public class MainGameLoop {
 
 		/* This is a test, use different verties later for different models  TODO:Read from file */
 		RawModel model = OBJLoader.loadObjModel("ship", loader);
-		
-		
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Wood 1"));
 		TexturedModel staticModel = new TexturedModel(model, texture);
 		ModelTexture specularTexture = staticModel.getTexture();
@@ -37,13 +35,18 @@ public class MainGameLoop {
 		specularTexture.setReflectivity(0.5f);
 		
 		Entity entity = new Entity(staticModel, new Vector3f(0,0.4f,0),0,0,0,1);
-		Light light = new Light(new Vector3f(3000,2000,2000), new Vector3f(1,1,1));
+		
+		Light light = new Light(new Vector3f(3000,2000,2000), new  Vector3f(1,1,1));
 		
 		Entity defaultLook = new Entity(staticModel, new Vector3f(0,0,0),0,0,0,1);
 		Camera camera = new Camera(defaultLook);
+		
 		MasterRenderer renderer = new MasterRenderer();
 		
-		Terrain terrain = new Terrain(0,0,loader,new ModelTexture(loader.loadTexture("floor1")));
+	
+		Terrain terrain = new Terrain(0,0,loader,new ModelTexture(loader.loadTexture("grass")));
+		
+	
 		Terrain terrain2 = new Terrain(-1,0,loader,new ModelTexture(loader.loadTexture("seabed")));
 
 		while(!Display.isCloseRequested()) {

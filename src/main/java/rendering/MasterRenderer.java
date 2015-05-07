@@ -37,7 +37,7 @@ public class MasterRenderer {
 	private List<Terrain> terrains = new ArrayList<>();
 	
 	public MasterRenderer() {
-		/*Prevent polygons not facing the camera to not be rendered */
+		/*Prevent polygons not facing the camera from being rendered */
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glCullFace(GL11.GL_BACK);
 		

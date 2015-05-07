@@ -20,7 +20,7 @@ public class Camera {
 	private float cameraSpeed;
 	
 	public Camera(Entity entity) {
-		this.cameraSpeed = 0.2f;
+		this.cameraSpeed = 0.07f;
 		this.entity = entity;
 	}
 	
