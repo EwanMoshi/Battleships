@@ -12,8 +12,9 @@ import main.java.rendering.DisplayManager;
 import main.java.rendering.Loader;
 import main.java.rendering.MasterRenderer;
 import main.java.rendering.OBJLoader;
-import main.java.rendering.Renderer;
+import main.java.rendering.EntityRenderer;
 import main.java.shaders.StaticShader;
+import main.java.terrain.Terrain;
 import main.java.textures.ModelTexture;
 
 
@@ -35,18 +36,23 @@ public class MainGameLoop {
 		specularTexture.setShineDamper(15);
 		specularTexture.setReflectivity(0.5f);
 		
-		Entity entity = new Entity(staticModel, new Vector3f(0,-5,-30),0,0,0,1);
-		Light light = new Light(new Vector3f(0,0,-20), new Vector3f(1,1,1));
+		Entity entity = new Entity(staticModel, new Vector3f(0,0.4f,0),0,0,0,1);
+		Light light = new Light(new Vector3f(3000,2000,2000), new Vector3f(1,1,1));
 		
 		Entity defaultLook = new Entity(staticModel, new Vector3f(0,0,0),0,0,0,1);
 		Camera camera = new Camera(defaultLook);
 		MasterRenderer renderer = new MasterRenderer();
 		
-		
+		Terrain terrain = new Terrain(0,0,loader,new ModelTexture(loader.loadTexture("floor1")));
+		Terrain terrain2 = new Terrain(-1,0,loader,new ModelTexture(loader.loadTexture("seabed")));
+
 		while(!Display.isCloseRequested()) {
 			//entity.increaseRotation(0, 0.5f, 0);
 			camera.move();
 					
+			renderer.processTerrain(terrain);
+			renderer.processTerrain(terrain2);
+
 			renderer.processEntity(entity);
 			
 			renderer.render(light, camera);
