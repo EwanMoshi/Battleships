@@ -12,8 +12,8 @@ public class StaticShader extends ShaderProgram{
 	
 	public static final String SHADERS = "src" + File.separatorChar + "main" + File.separatorChar + "java" + File.separatorChar + "shaders" + File.separatorChar;
 
-	private static final String VERTEX_FILE = SHADERS + "vertexShader.txt";
-	private static final String FRAGMENT_FILE = SHADERS + "fragmentShader.txt";
+	private static final String VERTEX_FILE = SHADERS + "vertexShader";
+	private static final String FRAGMENT_FILE = SHADERS + "fragmentShader";
 	
 	private int location_transformationMatrix;
 	private int location_projectionMatrix;

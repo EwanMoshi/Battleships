@@ -6,7 +6,7 @@ import  main.java.textures.ModelTexture;
 
 public class Terrain {
 	
-	private static final float SIZE = 5;
+	private static final float SIZE = 500;
 	private static final int VERTEX_COUNT = 128; //numbers of vertices along each terrain
 	
 	private float x;

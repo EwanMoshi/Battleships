@@ -13,8 +13,8 @@ public class TerrainShader extends ShaderProgram{
 	
 	public static final String SHADERS = "src" + File.separatorChar + "main" + File.separatorChar + "java" + File.separatorChar + "shaders" + File.separatorChar;
 
-	private static final String VERTEX_FILE = SHADERS + "terrainVertexShader.txt";
-	private static final String FRAGMENT_FILE = SHADERS + "terrainFragmentShader.txt";
+	private static final String VERTEX_FILE = SHADERS + "terrainVertexShader";
+	private static final String FRAGMENT_FILE = SHADERS + "terrainFragmentShader";
 	
 	private int location_transformationMatrix;
 	private int location_projectionMatrix;
