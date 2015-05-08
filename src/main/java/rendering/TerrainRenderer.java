@@ -2,6 +2,9 @@ package main.java.rendering;
 
 import java.util.List;
 
+import main.java.models.RawModel;
+import main.java.models.TexturedModel;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
@@ -9,9 +12,6 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import main.java.entities.Entity;
-import main.java.models.RawModel;
-import main.java.models.TexturedModel;
 import main.java.shaders.TerrainShader;
 import main.java.terrain.Terrain;
 import main.java.textures.ModelTexture;
@@ -20,25 +20,24 @@ import main.java.toolbox.Maths;
 public class TerrainRenderer {
 
 	private TerrainShader shader;
-	
+
 	public TerrainRenderer(TerrainShader shader, Matrix4f projectionMatrix) {
 		this.shader = shader;
 		shader.start();
 		shader.loadProjectionMatrix(projectionMatrix);
 		shader.stop();
 	}
-	
-	public void render(List<Terrain> terrains) {
-		for(Terrain t : terrains) {
-			prepareTerrain(t);
-			loadModelMatrix(t);
-			
-			GL11.glDrawElements(GL11.GL_TRIANGLES,  t.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT,0);
 
+	public void render(List<Terrain> terrains) {
+		for (Terrain terrain : terrains) {
+			prepareTerrain(terrain);
+			loadModelMatrix(terrain);
+			GL11.glDrawElements(GL11.GL_TRIANGLES, terrain.getModel().getVertexCount(),
+					GL11.GL_UNSIGNED_INT, 0);
 			unbindTexturedModel();
 		}
 	}
-	
+
 	private void prepareTerrain(Terrain terrain) {
 		RawModel rawModel = terrain.getModel();
 		GL30.glBindVertexArray(rawModel.getVaoID());
@@ -50,11 +49,11 @@ public class TerrainRenderer {
 		
 		ModelTexture texture = terrain.getTexture();
 		shader.loadShineVariables(texture.getShineDamper(), texture.getReflectivity());
-
+		
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getID());
 	}
-	
+
 	private void unbindTexturedModel() {
 		/*Disable all the attributes in the VAO */
 		GL20.glDisableVertexAttribArray(0);
@@ -62,9 +61,11 @@ public class TerrainRenderer {
 		GL20.glDisableVertexAttribArray(2);
 		GL30.glBindVertexArray(0);
 	}
-	
+
 	private void loadModelMatrix(Terrain terrain) {
-		Matrix4f transformationMatrix = Maths.createTransformationMatrix(new Vector3f(terrain.getX(),0,terrain.getZ()), 0, 0, 0, 1);
+		Matrix4f transformationMatrix = Maths.createTransformationMatrix(
+				new Vector3f(terrain.getX(), 0, terrain.getZ()), 0, 0, 0, 1);
 		shader.loadTransformationMatrix(transformationMatrix);
 	}
+
 }

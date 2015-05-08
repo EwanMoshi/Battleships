@@ -35,18 +35,25 @@ public class MainGameLoop {
 		specularTexture.setReflectivity(0.5f);
 		
 		Entity entity = new Entity(staticModel, new Vector3f(0,0.4f,0),0,0,0,1);
-		
-		Light light = new Light(new Vector3f(3000,2000,2000), new  Vector3f(1,1,1));
+		//staticModel.getTexture().setHasTransparency(true); //TODO: maybe get rid of this as it turns off back culling
+
+		Light light = new Light(new Vector3f(2000,2000,2000), new  Vector3f(1,1,1));
 		
 		Entity defaultLook = new Entity(staticModel, new Vector3f(0,0,0),0,0,0,1);
-		Camera camera = new Camera(defaultLook);
+		Camera camera = new Camera();
 		
 		MasterRenderer renderer = new MasterRenderer();
 		
-	
-		Terrain terrain = new Terrain(0,0,loader,new ModelTexture(loader.loadTexture("grass")));
+		/*Grass Model*/
+		TexturedModel grass = new TexturedModel(OBJLoader.loadObjModel("grassModel", loader), new ModelTexture(loader.loadTexture("grassTexture")));
+		Entity grassEntity = new Entity(grass, new Vector3f(0,0,0),0,0,0,0.1f);
+		//grass.getTexture().setHasTransparency(true);
+		//grass.getTexture().setUseFakeLighting(true);
 		
-	
+		/*Terrain Model*/
+		Terrain terrain = new Terrain(0,0,loader,new ModelTexture(loader.loadTexture("mud")));
+		//terrain.getTexture().setHasTransparency(true); //set transparency true if the texture has transparency
+		//terrain.getTexture().setUseFakeLighting(true); //set fake lighting true meaning all the normals face upwards
 		Terrain terrain2 = new Terrain(-1,0,loader,new ModelTexture(loader.loadTexture("seabed")));
 
 		while(!Display.isCloseRequested()) {
@@ -55,6 +62,8 @@ public class MainGameLoop {
 					
 			renderer.processTerrain(terrain);
 			renderer.processTerrain(terrain2);
+			
+			renderer.processEntity(grassEntity);
 
 			renderer.processEntity(entity);
 			
