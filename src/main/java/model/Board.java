@@ -1,24 +1,37 @@
 package main.java.model;
 
+import main.java.utilities.Pair;
+
+
 public class Board {
 
 	// Constants.
 	// ------------------------------------------------------------
 	public static final int WIDTH = 10;
 
+	
 	// Instance variables.
 	// ------------------------------------------------------------
-	private Cell[][] grid;
+	private ShipBlock[][] grid;
+	
+	protected Board () {
+		this.grid = new ShipBlock[WIDTH][WIDTH];
+	}
 
-	// Constructors.
+	
+	// Package methods.
 	// ------------------------------------------------------------
-	public Board () {
-		this.grid = new Cell[WIDTH][WIDTH];
+	
+	/**
+	 * Sink the ship block at the specified position.
+	 * @param pair, the (row,col) to sink.
+	 * @return boolean, whether anything was hit.
+	 */
+	protected boolean sink (Pair pair) {
+		ShipBlock block = grid[pair.x][pair.y];
+		if (block == null) return false;
+		block.destroy();
+		return true;
 	}
-
-	public void sink (int row, int col) {
-		Cell c = this.grid[row][col];
-		c.sink();
-	}
-
+	
 }
