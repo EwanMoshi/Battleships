@@ -23,7 +23,7 @@ uniform vec2 offset;
  	vec4 worldPosition = transformationMatrix * vec4(position.x,position.y,position.z,1.0);
  
  	gl_Position = projectionMatrix * viewMatrix * worldPosition;
-	pass_textureCoords = (textureCoords / numberOfRows) * offset;
+	pass_textureCoords = (textureCoords / numberOfRows) + offset;
 	
 	vec3 actualNormal = normal;
 	if(useFakeLighting > 0.5) {

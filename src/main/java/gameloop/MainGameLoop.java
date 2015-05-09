@@ -80,11 +80,11 @@ public class MainGameLoop {
 		
 		//********************** GRID FOR THE BOARD ***********************/
 		ModelTexture t = new ModelTexture(loader.loadTexture("tile")); //these 2 must be
-		TexturedModel gridTile = new TexturedModel(tileModel, t);      //outside for loop to increase performance!
+		TexturedModel gridTile = new TexturedModel(tileModel, t);      //outside for loop to increase performance!	
 		gridTile.getTexture().setHasTransparency(true); 
 		for(int i = -100; i < 100; i++) {
 			for(int j = -100; j < 0; j++) { //100 covers all almost
-				Entity gridTileEntity = new Entity(gridTile, 0, new Vector3f(i,4,j),0,0,0, 0.5f);
+				Entity gridTileEntity = new Entity(gridTile, 0, new Vector3f(i,4,j),0,0,0, 2);
 				entities.add(gridTileEntity);
 			}
 		}
