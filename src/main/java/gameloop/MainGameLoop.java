@@ -47,8 +47,8 @@ public class MainGameLoop {
 		/*Grass Model*/
 		TexturedModel grass = new TexturedModel(OBJLoader.loadObjModel("grassModel", loader), new ModelTexture(loader.loadTexture("grassTexture")));
 		Entity grassEntity = new Entity(grass, new Vector3f(0,0,0),0,0,0,0.1f);
-		//grass.getTexture().setHasTransparency(true);
-		//grass.getTexture().setUseFakeLighting(true);
+		grass.getTexture().setHasTransparency(true);
+		grass.getTexture().setUseFakeLighting(true);
 		
 		/*Terrain Model*/
 		Terrain terrain = new Terrain(0,0,loader,new ModelTexture(loader.loadTexture("mud")));
