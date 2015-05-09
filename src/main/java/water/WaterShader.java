@@ -1,15 +1,20 @@
 package main.java.water;
 
+import java.io.File;
+
 import org.lwjgl.util.vector.Matrix4f;
+
 import main.java.shaders.ShaderProgram;
 import main.java.toolbox.Maths;
 import main.java.entities.Camera;
 
 public class WaterShader extends ShaderProgram {
 
-	private final static String VERTEX_FILE = "src/water/waterVertex.txt";
-	private final static String FRAGMENT_FILE = "src/water/waterFragment.txt";
+	public static final String SHADERS = "src" + File.separatorChar + "main" + File.separatorChar + "java" + File.separatorChar + "water" + File.separatorChar;
 
+	private static final String VERTEX_FILE = SHADERS + "waterVertexShader";
+	private static final String FRAGMENT_FILE = SHADERS + "waterFragmentShader";
+	
 	private int location_modelMatrix;
 	private int location_viewMatrix;
 	private int location_projectionMatrix;

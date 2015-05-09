@@ -1,5 +1,8 @@
 package main.java.gameloop;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -16,6 +19,9 @@ import main.java.rendering.EntityRenderer;
 import main.java.shaders.StaticShader;
 import main.java.terrain.Terrain;
 import main.java.textures.ModelTexture;
+import main.java.water.WaterRenderer;
+import main.java.water.WaterShader;
+import main.java.water.WaterTile;
 
 
 public class MainGameLoop {
@@ -56,6 +62,13 @@ public class MainGameLoop {
 		//terrain.getTexture().setUseFakeLighting(true); //set fake lighting true meaning all the normals face upwards
 		Terrain terrain2 = new Terrain(-1,0,loader,new ModelTexture(loader.loadTexture("seabed")), "heightMap");
 
+		//****************** Setup the Water Renderer ******************** //
+		WaterShader waterShader = new WaterShader();
+		WaterRenderer waterRenderer = new WaterRenderer(loader,waterShader, renderer.getProjectionMatrix());
+		List<WaterTile> waters = new ArrayList<>();
+		waters.add(new WaterTile(-230, -240,0)); //x and z position first two parameters
+		waters.add(new WaterTile(-750, -240,0)); //x and z position first two parameters
+
 		while(!Display.isCloseRequested()) {
 			//entity.increaseRotation(0, 0.5f, 0);
 			camera.move();
@@ -66,8 +79,10 @@ public class MainGameLoop {
 			renderer.processEntity(grassEntity);
 
 			renderer.processEntity(entity);
-			
 			renderer.render(light, camera);
+			
+			waterRenderer.render(waters, camera);
+			
 			DisplayManager.updateDisplay();
 		}
 		renderer.cleanUp(); //clean up the renderer

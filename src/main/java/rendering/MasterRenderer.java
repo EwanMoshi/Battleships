@@ -128,4 +128,11 @@ public class MasterRenderer {
 	}
 	
 
+	/**
+	 * Return Projection Matrix
+	 * @return
+	 */
+    public Matrix4f getProjectionMatrix() {
+        return this.projectionMatrix;
+    }
 }
