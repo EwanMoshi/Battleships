@@ -57,6 +57,8 @@ public class EntityRenderer {
 		GL20.glEnableVertexAttribArray(2);
 		ModelTexture texture = model.getTexture();
 		
+		shader.loadNumberOfRows(texture.getNumberOfRows());
+		
 		/* If texture has some transparent parts, disable culling */
 		if(texture.isHasTransparency()) {
 			MasterRenderer.disableCulling();
@@ -77,9 +79,9 @@ public class EntityRenderer {
 	}
 
 	private void prepareInstance(Entity entity) {
-		Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(),
-				entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
+		Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(), entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
 		shader.loadTransformationMatrix(transformationMatrix);
+		shader.loadOffSet(entity.getTextureXOffset(), entity.getTextureYOffSet());
 	}
 
 }

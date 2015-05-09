@@ -11,6 +11,8 @@ import main.java.entities.Entity;
 import main.java.entities.Light;
 import main.java.models.RawModel;
 import main.java.models.TexturedModel;
+import main.java.objConverter.ModelData;
+import main.java.objConverter.OBJFileLoader;
 import main.java.rendering.DisplayManager;
 import main.java.rendering.Loader;
 import main.java.rendering.MasterRenderer;
@@ -34,18 +36,23 @@ public class MainGameLoop {
 		Loader loader = new Loader();
 		
 		/* This is a test, use different verties later for different models  TODO:Read from file */
-		RawModel model = OBJLoader.loadObjModel("ship", loader);
+		ModelData data = OBJFileLoader.loadOBJ("ship");
+		RawModel shipModel = loader.loadToVAO(data.getVertices(),  data.getTextureCoords(), data.getNormals(), data.getIndices());
+		
+		ModelData tileData = OBJFileLoader.loadOBJ("flatTile");
+		RawModel tileModel = loader.loadToVAO(tileData.getVertices(),  tileData.getTextureCoords(), tileData.getNormals(), tileData.getIndices());
+		
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Wood 1"));
-		TexturedModel staticModel = new TexturedModel(model, texture);
+		TexturedModel staticModel = new TexturedModel(shipModel, texture);
 		ModelTexture specularTexture = staticModel.getTexture();
 		specularTexture.setShineDamper(15);
 		specularTexture.setReflectivity(0.5f);
-		
 		Entity entity = new Entity(staticModel, new Vector3f(0,0.4f,0),0,0,0,1);
 		//staticModel.getTexture().setHasTransparency(true); //TODO: maybe get rid of this as it turns off back culling
+		
 		/* List of all the entities in the game */
 		List<Entity> entities = new ArrayList<>();
-		//entities.add(entity);
+		entities.add(entity);
 		
 		Light light = new Light(new Vector3f(2000,2000,2000), new  Vector3f(1,1,1));
 		
@@ -70,12 +77,14 @@ public class MainGameLoop {
 		terrains.add(terrain);
 		terrains.add(terrain2);
 		
+		
 		//********************** GRID FOR THE BOARD ***********************/
-		for(int i = 0; i < 1; i++) {
-			for(int j = -1; j > -100; j--) { //100 covers all almost
-				TexturedModel gridTile = new TexturedModel(OBJLoader.loadObjModel("flatTile", loader), new ModelTexture(loader.loadTexture("tile")));
-				Entity gridTileEntity = new Entity(gridTile, new Vector3f(i,4,j),0,0,0, 0.5f);
-				//gridTile.getTexture().setHasTransparency(true); 
+		ModelTexture t = new ModelTexture(loader.loadTexture("tile")); //these 2 must be
+		TexturedModel gridTile = new TexturedModel(tileModel, t);      //outside for loop to increase performance!
+		gridTile.getTexture().setHasTransparency(true); 
+		for(int i = -100; i < 100; i++) {
+			for(int j = -100; j < 0; j++) { //100 covers all almost
+				Entity gridTileEntity = new Entity(gridTile, 0, new Vector3f(i,4,j),0,0,0, 0.5f);
 				entities.add(gridTileEntity);
 			}
 		}

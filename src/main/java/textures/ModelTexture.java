@@ -10,6 +10,7 @@ public class ModelTexture {
 	private boolean hasTransparency = false;
 	private boolean useFakeLighting = false; //this is useful for things like grass to set all the normals to face upwards
 	
+	private int numberOfRows = 1; //this is used for a Texture Atlases (this game will only use for tiles so just 1 row)
 	
 	public ModelTexture(int texture){
 		this.textureID = texture;
@@ -20,6 +21,18 @@ public class ModelTexture {
 	public boolean isUseFakeLighting() {
 		return useFakeLighting;
 	}
+
+	public int getNumberOfRows() {
+		return numberOfRows;
+	}
+
+
+
+	public void setNumberOfRows(int numberOfRows) {
+		this.numberOfRows = numberOfRows;
+	}
+
+
 
 	public void setUseFakeLighting(boolean useFakeLighting) {
 		this.useFakeLighting = useFakeLighting;
