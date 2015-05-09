@@ -31,7 +31,7 @@ uniform float reflectivity;
  	
  	vec4 textureColour = texture(textureSampler, pass_textureCoords);
  	if (textureColour.a < 0.5) {
- 		discard;
+ 		//discard;
  	}
  	
  	out_Color = vec4 (diffuse,1.0) * texture(textureSampler,pass_textureCoords) + vec4(finalSpecular,1.0); 

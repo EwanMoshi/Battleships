@@ -17,7 +17,7 @@ public class Terrain {
 	public static final String HEIGHT_MAP_LOCATION = "res" + File.separatorChar;
 
 	
-	private static final float SIZE = 500;
+	private static final float SIZE = 100;
 	
 	private static final float MAX_HEIGHT = 40;
 	private static final float MAX_PIXEL_COLOUR = 256 * 256 * 256; //3 colour channels between 0-256
