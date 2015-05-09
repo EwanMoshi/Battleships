@@ -15,7 +15,7 @@ public class Camera {
 	private float cameraSpeed;
 	
 	public Camera(){
-		this.cameraSpeed = 0.1f;
+		this.cameraSpeed = 0.5f;
 	}
 	
 	public void move(){

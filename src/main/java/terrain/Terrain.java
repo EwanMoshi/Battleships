@@ -21,7 +21,6 @@ public class Terrain {
 	
 	private static final float MAX_HEIGHT = 40;
 	private static final float MAX_PIXEL_COLOUR = 256 * 256 * 256; //3 colour channels between 0-256
-	
 	private float x;
 	private float z;
 	private RawModel model;  //model of the terrain
