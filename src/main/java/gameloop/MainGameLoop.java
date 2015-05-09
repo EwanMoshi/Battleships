@@ -51,10 +51,10 @@ public class MainGameLoop {
 		grass.getTexture().setUseFakeLighting(true);
 		
 		/*Terrain Model*/
-		Terrain terrain = new Terrain(0,0,loader,new ModelTexture(loader.loadTexture("mud")));
+		Terrain terrain = new Terrain(0,0,loader,new ModelTexture(loader.loadTexture("mud")), "heightMap");
 		//terrain.getTexture().setHasTransparency(true); //set transparency true if the texture has transparency
 		//terrain.getTexture().setUseFakeLighting(true); //set fake lighting true meaning all the normals face upwards
-		Terrain terrain2 = new Terrain(-1,0,loader,new ModelTexture(loader.loadTexture("seabed")));
+		Terrain terrain2 = new Terrain(-1,0,loader,new ModelTexture(loader.loadTexture("seabed")), "heightMap");
 
 		while(!Display.isCloseRequested()) {
 			//entity.increaseRotation(0, 0.5f, 0);

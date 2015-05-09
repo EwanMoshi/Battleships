@@ -10,6 +10,13 @@ public class ModelTexture {
 	private boolean hasTransparency = false;
 	private boolean useFakeLighting = false; //this is useful for things like grass to set all the normals to face upwards
 	
+	
+	public ModelTexture(int texture){
+		this.textureID = texture;
+	}
+	
+	
+	
 	public boolean isUseFakeLighting() {
 		return useFakeLighting;
 	}
@@ -18,9 +25,6 @@ public class ModelTexture {
 		this.useFakeLighting = useFakeLighting;
 	}
 
-	public ModelTexture(int texture){
-		this.textureID = texture;
-	}
 	
 	public boolean isHasTransparency() {
 		return hasTransparency;

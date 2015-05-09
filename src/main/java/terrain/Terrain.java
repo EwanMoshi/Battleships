@@ -1,24 +1,35 @@
 package main.java.terrain;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import main.java.models.RawModel;
 import  main.java.rendering.Loader;
 import  main.java.textures.ModelTexture;
 
 public class Terrain {
 	
+	public static final String HEIGHT_MAP_LOCATION = "res" + File.separatorChar;
+
+	
 	private static final float SIZE = 500;
-	private static final int VERTEX_COUNT = 128; //numbers of vertices along each terrain
+	
+	private static final float MAX_HEIGHT = 40;
+	private static final float MAX_PIXEL_COLOUR = 256 * 256 * 256; //3 colour channels between 0-256
 	
 	private float x;
 	private float z;
 	private RawModel model;  //model of the terrain
 	private ModelTexture texture; //texture for the terrain
 	
-	public Terrain(int gridX, int gridZ, Loader loader, ModelTexture texture){
+	public Terrain(int gridX, int gridZ, Loader loader, ModelTexture texture, String heightMap){
 		this.texture = texture;
 		this.x = gridX * SIZE;
 		this.z = gridZ * SIZE;
-		this.model = generateTerrain(loader);
+		this.model = generateTerrain(loader, heightMap);
 	}
 	
 	
@@ -51,7 +62,16 @@ public class Terrain {
 	 * @param loader
 	 * @return
 	 */
-	private RawModel generateTerrain(Loader loader){
+	private RawModel generateTerrain(Loader loader, String heightMap){
+		BufferedImage image = null;
+		try {
+			image = ImageIO.read(new File(HEIGHT_MAP_LOCATION + heightMap + ".png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		int VERTEX_COUNT = image.getHeight(); //numbers of vertices along each terrain
+		
 		int count = VERTEX_COUNT * VERTEX_COUNT;
 		float[] vertices = new float[count * 3];
 		float[] normals = new float[count * 3];
@@ -61,7 +81,7 @@ public class Terrain {
 		for(int i=0;i<VERTEX_COUNT;i++){
 			for(int j=0;j<VERTEX_COUNT;j++){
 				vertices[vertexPointer*3] = -(float)j/((float)VERTEX_COUNT - 1) * SIZE;
-				vertices[vertexPointer*3+1] = 0;
+				vertices[vertexPointer*3+1] = getHeight(j, i, image); //calculate height for this vetex
 				vertices[vertexPointer*3+2] = -(float)i/((float)VERTEX_COUNT - 1) * SIZE;
 				normals[vertexPointer*3] = 0;
 				normals[vertexPointer*3+1] = 1;
@@ -89,4 +109,17 @@ public class Terrain {
 		return loader.loadToVAO(vertices, textureCoords, normals, indices);
 	}
 
+	private float getHeight(int x, int z, BufferedImage image) {
+		if(x < 0 || x >= image.getHeight() || z < 0 || z >= image.getHeight()) {
+			return 0;
+		}
+		float height = image.getRGB(x, z); //return value between -Max_PIXEL_COLOUR and 0
+		height += MAX_PIXEL_COLOUR/2f; //this gives a range between MAX_PIXEL_COLOUR/2 and MAX/2
+		height /= MAX_PIXEL_COLOUR/2f; //this gives a range between -1 and 1
+		height *= MAX_HEIGHT; //Convert height to a value between MAX_HEIGHT and -MAX_HEIGHT
+		return height;
+	}
+	
 }
+
+
