@@ -19,6 +19,7 @@ import main.java.rendering.EntityRenderer;
 import main.java.shaders.StaticShader;
 import main.java.terrain.Terrain;
 import main.java.textures.ModelTexture;
+import main.java.water.WaterFrameBuffers;
 import main.java.water.WaterRenderer;
 import main.java.water.WaterShader;
 import main.java.water.WaterTile;
@@ -42,7 +43,10 @@ public class MainGameLoop {
 		
 		Entity entity = new Entity(staticModel, new Vector3f(0,0.4f,0),0,0,0,1);
 		//staticModel.getTexture().setHasTransparency(true); //TODO: maybe get rid of this as it turns off back culling
-
+		/* List of all the entities in the game */
+		List<Entity> entities = new ArrayList<>();
+		entities.add(entity);
+		
 		Light light = new Light(new Vector3f(2000,2000,2000), new  Vector3f(1,1,1));
 		
 		Entity defaultLook = new Entity(staticModel, new Vector3f(0,0,0),0,0,0,1);
@@ -55,36 +59,42 @@ public class MainGameLoop {
 		Entity grassEntity = new Entity(grass, new Vector3f(0,0,0),0,0,0,0.1f);
 		grass.getTexture().setHasTransparency(true);
 		grass.getTexture().setUseFakeLighting(true);
+		entities.add(grassEntity);
 		
-		/*Terrain Model*/
+		//********************** Terrain Model ****************************/
 		Terrain terrain = new Terrain(0,0,loader,new ModelTexture(loader.loadTexture("mud")), "heightMap");
 		//terrain.getTexture().setHasTransparency(true); //set transparency true if the texture has transparency
 		//terrain.getTexture().setUseFakeLighting(true); //set fake lighting true meaning all the normals face upwards
 		Terrain terrain2 = new Terrain(-1,0,loader,new ModelTexture(loader.loadTexture("seabed")), "heightMap");
-
-		//****************** Setup the Water Renderer ******************** //
+		List<Terrain> terrains = new ArrayList<>();
+		terrains.add(terrain);
+		terrains.add(terrain2);
+		
+		//****************** Setup the Water Renderer ******************** /
 		WaterShader waterShader = new WaterShader();
 		WaterRenderer waterRenderer = new WaterRenderer(loader,waterShader, renderer.getProjectionMatrix());
 		List<WaterTile> waters = new ArrayList<>();
 		waters.add(new WaterTile(-230, -240,0)); //x and z position first two parameters
 		waters.add(new WaterTile(-750, -240,0)); //x and z position first two parameters
 
+		WaterFrameBuffers fbos = new WaterFrameBuffers();
+		
 		while(!Display.isCloseRequested()) {
 			//entity.increaseRotation(0, 0.5f, 0);
 			camera.move();
 					
-			renderer.processTerrain(terrain);
-			renderer.processTerrain(terrain2);
+			fbos.bindReflectionFrameBuffer();
+			renderer.renderScene(entities, terrains, light, camera);
+			fbos.unbindCurrentFrameBuffer();
 			
-			renderer.processEntity(grassEntity);
-
-			renderer.processEntity(entity);
-			renderer.render(light, camera);
-			
+			renderer.renderScene(entities, terrains, light, camera);			
 			waterRenderer.render(waters, camera);
 			
 			DisplayManager.updateDisplay();
 		}
+		
+		/* Cleaning up after game is closed */
+		fbos.cleanUp();
 		renderer.cleanUp(); //clean up the renderer
 		loader.cleanUp(); //clean up all the VAOs and VBOs
 		DisplayManager.closeDisplay(); //close display when game loop ends
