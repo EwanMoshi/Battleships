@@ -42,6 +42,19 @@ public class Loader {
 		return new RawModel(vaoID,indices.length);
 	}
 	
+	/**
+	 * Used for rendering a quadrant
+	 * @param positions
+	 * @param dimensions
+	 * @return
+	 */
+    public RawModel loadToVAO(float[] positions, int dimensions) {
+        int vaoID = createVAO();
+        this.storeDataInAttributeList(0, dimensions, positions);
+        unbindVAO();
+        return new RawModel(vaoID, positions.length / dimensions);
+    }
+	
 	public int loadTexture(String fileName) {
 		Texture texture = null;
 		try {
@@ -139,6 +152,7 @@ public class Loader {
 		buffer.flip();
 		return buffer;
 	}
+
 	
 	
 
