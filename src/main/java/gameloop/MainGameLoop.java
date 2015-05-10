@@ -82,9 +82,9 @@ public class MainGameLoop {
 		ModelTexture t = new ModelTexture(loader.loadTexture("tile")); //these 2 must be
 		TexturedModel gridTile = new TexturedModel(tileModel, t);      //outside for loop to increase performance!	
 		gridTile.getTexture().setHasTransparency(true); 
-		for(int i = -5; i < 4; i++) {
-			for(int j = -5; j < 0; j++) { //100 covers all almost
-				Entity gridTileEntity = new Entity(gridTile, 0, new Vector3f(i*21+20,4,j*21+15),0,0,0, 1);
+		for(int i = -10; i < 10; i++) {
+			for(int j = -10; j < 0; j++) { //100 covers all almost
+				Entity gridTileEntity = new Entity(gridTile, 0, new Vector3f(i*10.5f+5,4,j*10.5f+5),0,0,0, 1);
 				entities.add(gridTileEntity);
 			}
 		}
@@ -94,8 +94,8 @@ public class MainGameLoop {
 		WaterShader waterShader = new WaterShader();
 		WaterRenderer waterRenderer = new WaterRenderer(loader,waterShader, renderer.getProjectionMatrix());
 		List<WaterTile> waters = new ArrayList<>();
-		waters.add(new WaterTile(-230, -240,-6)); //x and z position first two parameters and third is height
-		waters.add(new WaterTile(-750, -240, -6)); 
+		waters.add(new WaterTile(-50, -50,-6)); //x and z position first two parameters and third is height
+		waters.add(new WaterTile(50, -50, -6)); 
 
 		WaterFrameBuffers fbos = new WaterFrameBuffers();
 		

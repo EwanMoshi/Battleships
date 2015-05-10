@@ -2,7 +2,7 @@ package main.java.water;
 
 public class WaterTile {
 	
-	public static final float TILE_SIZE = 230; //size of the tile for water (50 is nice, maybe try that later if we choose to make water tiles clickable*/
+	public static final float TILE_SIZE = 50; //size of the tile for water (50 is nice, maybe try that later if we choose to make water tiles clickable*/
 	
 	private float height;
 	private float x,z;

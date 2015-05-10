@@ -61,9 +61,9 @@ public class Loader {
 			texture = TextureLoader.getTexture("PNG", new FileInputStream("res/" + fileName + ".png"));
 			
 			/*Tell OpenGL to render textures in distance with lower resolution to make rendering faster*/
-			GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
-			GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, -0.3f); //set texture's "level of detail" 
+			//GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
+			//GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
+			//GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, -0.3f); //set texture's "level of detail" 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Tried to load texture " + fileName + ".png , didn't work");
