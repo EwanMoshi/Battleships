@@ -39,7 +39,7 @@ public class MainGameLoop {
 		ModelData data = OBJFileLoader.loadOBJ("ship");
 		RawModel shipModel = loader.loadToVAO(data.getVertices(),  data.getTextureCoords(), data.getNormals(), data.getIndices());
 		
-		ModelData tileData = OBJFileLoader.loadOBJ("untitled");
+		ModelData tileData = OBJFileLoader.loadOBJ("flatTile");
 		RawModel tileModel = loader.loadToVAO(tileData.getVertices(),  tileData.getTextureCoords(), tileData.getNormals(), tileData.getIndices());
 		
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Wood 1"));
