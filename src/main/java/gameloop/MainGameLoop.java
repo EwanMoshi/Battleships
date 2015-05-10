@@ -21,6 +21,7 @@ import main.java.rendering.EntityRenderer;
 import main.java.shaders.StaticShader;
 import main.java.terrain.Terrain;
 import main.java.textures.ModelTexture;
+import main.java.toolbox.MouseSelector;
 import main.java.water.WaterFrameBuffers;
 import main.java.water.WaterRenderer;
 import main.java.water.WaterShader;
@@ -99,10 +100,14 @@ public class MainGameLoop {
 
 		WaterFrameBuffers fbos = new WaterFrameBuffers();
 		
+		MouseSelector selector = new MouseSelector(camera, renderer.getProjectionMatrix());
+		
 		while(!Display.isCloseRequested()) {
 			//entity.increaseRotation(0, 0.5f, 0);
 			camera.move();
-								
+						
+			//selector.update(); nothing to select at the moment so commented this out
+			
 			fbos.bindReflectionFrameBuffer();
 			//renderer.renderScene(entities, terrains, light, camera);
 			fbos.unbindCurrentFrameBuffer();
