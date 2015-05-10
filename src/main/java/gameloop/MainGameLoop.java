@@ -39,7 +39,7 @@ public class MainGameLoop {
 		ModelData data = OBJFileLoader.loadOBJ("ship");
 		RawModel shipModel = loader.loadToVAO(data.getVertices(),  data.getTextureCoords(), data.getNormals(), data.getIndices());
 		
-		ModelData tileData = OBJFileLoader.loadOBJ("flatTile");
+		ModelData tileData = OBJFileLoader.loadOBJ("untitled");
 		RawModel tileModel = loader.loadToVAO(tileData.getVertices(),  tileData.getTextureCoords(), tileData.getNormals(), tileData.getIndices());
 		
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Wood 1"));
@@ -82,9 +82,9 @@ public class MainGameLoop {
 		ModelTexture t = new ModelTexture(loader.loadTexture("tile")); //these 2 must be
 		TexturedModel gridTile = new TexturedModel(tileModel, t);      //outside for loop to increase performance!	
 		gridTile.getTexture().setHasTransparency(true); 
-		for(int i = -100; i < 100; i++) {
-			for(int j = -100; j < 0; j++) { //100 covers all almost
-				Entity gridTileEntity = new Entity(gridTile, 0, new Vector3f(i,4,j),0,0,0, 2);
+		for(int i = -5; i < 4; i++) {
+			for(int j = -5; j < 0; j++) { //100 covers all almost
+				Entity gridTileEntity = new Entity(gridTile, 0, new Vector3f(i*21+20,4,j*21+15),0,0,0, 1);
 				entities.add(gridTileEntity);
 			}
 		}
@@ -94,8 +94,8 @@ public class MainGameLoop {
 		WaterShader waterShader = new WaterShader();
 		WaterRenderer waterRenderer = new WaterRenderer(loader,waterShader, renderer.getProjectionMatrix());
 		List<WaterTile> waters = new ArrayList<>();
-		//waters.add(new WaterTile(-230, -240,-6)); //x and z position first two parameters and third is height
-		//waters.add(new WaterTile(-750, -240, -6)); 
+		waters.add(new WaterTile(-230, -240,-6)); //x and z position first two parameters and third is height
+		waters.add(new WaterTile(-750, -240, -6)); 
 
 		WaterFrameBuffers fbos = new WaterFrameBuffers();
 		
