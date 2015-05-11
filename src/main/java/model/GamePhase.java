@@ -8,8 +8,17 @@ public enum GamePhase {
 
 	// player is selecting a tile to bombard.
 	SINKING,
-	
+
 	// player has bombarded a tile.
-	DONE;
-	
+	DONE,
+
+	// players are setting up the ships on their boards.
+	SETUP,
+
+	// players are taking turns.
+	PLAYING,
+
+	// this comment is only here because PLAYING and SETUP have comments.
+	FINISHED;
+
 }
