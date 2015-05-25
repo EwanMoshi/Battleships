@@ -57,7 +57,7 @@ public class MainGameLoop {
 		
 		Light light = new Light(new Vector3f(2000,2000,2000), new  Vector3f(1,1,1));
 		
-		Entity defaultLook = new Entity(staticModel, new Vector3f(0,20,-45),0,0,0,1,null);
+		Entity defaultLook = new Entity(staticModel, new Vector3f(0,20,-45),0,0,0,1,data);
 		Camera camera = new Camera(defaultLook);
 		
 		MasterRenderer renderer = new MasterRenderer();
