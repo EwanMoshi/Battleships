@@ -71,7 +71,7 @@ public class BoundingSphere {
 	 */
 	public boolean contains (Vector3f point) {
 		float dist = Vector3f.dot(point, point);
-		return dist < this.radiusSquared;
+		return dist <= this.radiusSquared;
 	}
 	
 }
