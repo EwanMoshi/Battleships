@@ -15,6 +15,11 @@ public class OBJFileLoader {
 	
 	private static final String RES_LOC = "res/";
 
+	/**
+	 * Load model data from the specified file.
+	 * @param objFileName: name of file to load.
+	 * @return ModelData
+	 */
 	public static ModelData loadOBJ(String objFileName) {
 		FileReader isr = null;
 		File objFile = new File(RES_LOC + objFileName + ".obj");
@@ -101,6 +106,20 @@ public class OBJFileLoader {
 		return indicesArray;
 	}
 
+	/**
+	 * Flatten the lists of each of these elements into a single array containing floats.Every triple of numbers
+	 * in an array represents a single entry in the vertices/textures/normals.
+	 * 
+	 * Modifies the arrays in-place.
+	 * 
+	 * @param vertices: list of vertices.
+	 * @param textures: list of textures.
+	 * @param normals: list of normals.
+	 * @param verticesArray: array of vertices [x1, y1, z1, x2, y2, z2, ... ]
+	 * @param texturesArray: array of textures [x1, y1, x2, y2, ... ]
+	 * @param normalsArray: array of normals [x1, y1, z1, x2, y2, z2, ... ]
+	 * @return return the furthest vertex from the origin.
+	 */
 	private static float convertDataToArrays(List<Vertex> vertices, List<Vector2f> textures,List<Vector3f> normals, float[] verticesArray, float[] texturesArray,float[] normalsArray) {
 		float furthestPoint = 0;
 		for (int i = 0; i < vertices.size(); i++) {

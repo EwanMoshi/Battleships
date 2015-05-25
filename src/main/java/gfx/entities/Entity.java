@@ -23,7 +23,7 @@ public class Entity {
 		this.rotY = rotY;
 		this.rotZ = rotZ;
 		this.scale = scale;
-		this.boundingSphere = new BoundingSphere(data);
+		this.boundingSphere = new BoundingSphere(data.getVertices());
 	}
 
 	
