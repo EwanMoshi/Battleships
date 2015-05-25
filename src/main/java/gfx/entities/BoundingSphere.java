@@ -54,9 +54,6 @@ public class BoundingSphere {
 			if (mag > this.radiusSquared) this.radiusSquared = mag;
 		}
 		
-		// square the radius, as per the formula above.
-		this.radiusSquared *= this.radiusSquared;
-		
 	}
 
 	
@@ -70,7 +67,10 @@ public class BoundingSphere {
 	 * @return true if point is inside the sphere.
 	 */
 	public boolean contains (Vector3f point) {
-		float dist = Vector3f.dot(point, point);
+		// important thing to remember is that we're storing radius^2, not radius.
+		Vector3f distanceVector = new Vector3f();
+		Vector3f.sub(centre, point, distanceVector);
+		float dist = Vector3f.dot(distanceVector, distanceVector);
 		return dist <= this.radiusSquared;
 	}
 	
