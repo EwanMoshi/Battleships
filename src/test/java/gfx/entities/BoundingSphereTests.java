@@ -13,19 +13,57 @@ import main.java.gfx.entities.BoundingSphere;
  */
 public class BoundingSphereTests {
 
+	
+	
+	// Trivial tests.
+	// ------------------------------------------------------------
+	
+	// These tests are for the trivial case of a sphere enclosing a single vertex.
+	// Centre:	 (0, 0, 0)
+	// Radius^2: 0
+	
+	private final float[] verticesTrivial = new float[]{
+			0, 0, 0
+	};
+	
+	private BoundingSphere makeTrivial() {
+		return new BoundingSphere(verticesTrivial);
+	}
+	
+	@Test
+	public void testTrivialSphereVertex() {
+		// sphere around a trivial model containing one vertex has only itself.
+		BoundingSphere sphere = new BoundingSphere(verticesTrivial);
+		Vector3f v1 = new Vector3f(verticesTrivial[0], verticesTrivial[1], verticesTrivial[2]);
+		assertTrue(sphere.contains(v1));
+	}
+	
+	@Test
+	public void testTrivialSphereNonVertices() {
+		BoundingSphere sphere = new BoundingSphere(verticesTrivial);
+		Vector3f v1 = new Vector3f(0.002f, 0.001f, -0.001f);
+		assertFalse(sphere.contains(v1));
+		Vector3f v2 = new Vector3f(0.015f, -0.15f, 0f);
+		assertFalse(sphere.contains(v2));
+		Vector3f v3 = new Vector3f(-0.001f, 0, 0);
+		assertFalse(sphere.contains(v3));
+	}
+	
+	
+	
+	// Small equidistant vertices tests.
+	// ------------------------------------------------------------
+	
+	// These tests are for a sphere containing three equidistant vertices.
+	// Centre:   (2,1,3)
+	// Radius^2: 25
+	
 	private final float[] verticesSmall = new float[]{
 		3, 3, 3,
 		1, -1, 3,
 		2, 1, 3
 	};
 
-	/**
-	 * Make a BoundingSphere. Has the following properties:
-	 * 		- centre   = (2,1,3)
-	 * 		- radius^2 = 25
-	 * All the vertices in this sphere are equidistant.
-	 * @return
-	 */
 	private BoundingSphere makeSmall() {
 		return new BoundingSphere(verticesSmall);
 	}
