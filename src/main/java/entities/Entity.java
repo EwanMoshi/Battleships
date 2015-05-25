@@ -1,6 +1,7 @@
 package main.java.entities;
 
 import main.java.models.TexturedModel;
+import main.java.objConverter.ModelData;
 
 import org.lwjgl.util.vector.Vector3f;
 
@@ -12,14 +13,17 @@ public class Entity {
 	private float scale;
 
 	private int textureIndex = 0; //identifies which texture to use from textureAtlas
+		
+	private BoundingSphere boundingSphere;
 	
-	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
+	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale, ModelData data) {
 		this.model = model;
 		this.position = position;
 		this.rotX = rotX;
 		this.rotY = rotY;
 		this.rotZ = rotZ;
 		this.scale = scale;
+		this.boundingSphere = new BoundingSphere(data);
 	}
 
 	

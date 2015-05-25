@@ -48,7 +48,7 @@ public class MainGameLoop {
 		ModelTexture specularTexture = staticModel.getTexture();
 		specularTexture.setShineDamper(15);
 		specularTexture.setReflectivity(0.5f);
-		Entity entity = new Entity(staticModel, new Vector3f(0,0.4f,0),0,0,0,1);
+		Entity entity = new Entity(staticModel, new Vector3f(0,0.4f,0),0,0,0,1,data);
 		//staticModel.getTexture().setHasTransparency(true); //TODO: maybe get rid of this as it turns off back culling
 		
 		/* List of all the entities in the game */
@@ -57,14 +57,14 @@ public class MainGameLoop {
 		
 		Light light = new Light(new Vector3f(2000,2000,2000), new  Vector3f(1,1,1));
 		
-		Entity defaultLook = new Entity(staticModel, new Vector3f(0,20,-45),0,0,0,1);
+		Entity defaultLook = new Entity(staticModel, new Vector3f(0,20,-45),0,0,0,1,null);
 		Camera camera = new Camera(defaultLook);
 		
 		MasterRenderer renderer = new MasterRenderer();
 		
 		/*Grass Model*/
-		TexturedModel grass = new TexturedModel(OBJLoader.loadObjModel("grassModel", loader), new ModelTexture(loader.loadTexture("grassTexture")));
-		Entity grassEntity = new Entity(grass, new Vector3f(0,0,0),0,0,0,0.1f);
+		TexturedModel grass = new TexturedModel(OBJLoader.loadObjModel("grassModel", loader),  new ModelTexture(loader.loadTexture("grassTexture")));
+		Entity grassEntity = new Entity(grass, new Vector3f(0,0,0),0,0,0,0.1f,OBJFileLoader.loadOBJ("grassModel"));
 		grass.getTexture().setHasTransparency(true);
 		grass.getTexture().setUseFakeLighting(true);
 		//entities.add(grassEntity);
@@ -106,8 +106,8 @@ public class MainGameLoop {
 			//entity.increaseRotation(0, 0.5f, 0);
 			camera.move();
 						
-			//selector.update(); nothing to select at the moment so commented this out
-			
+			//selector.update(); //nothing to select at the moment so commented this out
+
 			fbos.bindReflectionFrameBuffer();
 			//renderer.renderScene(entities, terrains, light, camera);
 			fbos.unbindCurrentFrameBuffer();
