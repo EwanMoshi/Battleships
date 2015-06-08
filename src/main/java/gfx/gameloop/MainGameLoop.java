@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import main.java.gfx.entities.Camera;
 import main.java.gfx.entities.Entity;
@@ -91,28 +94,42 @@ public class MainGameLoop {
 		}
 		//****************************************************************//
 		
+		WaterFrameBuffers fbos = new WaterFrameBuffers();
+
 		//****************** Setup the Water Renderer ********************//
 		WaterShader waterShader = new WaterShader();
-		WaterRenderer waterRenderer = new WaterRenderer(loader,waterShader, renderer.getProjectionMatrix());
+		WaterRenderer waterRenderer = new WaterRenderer(loader,waterShader, renderer.getProjectionMatrix(), fbos);
 		List<WaterTile> waters = new ArrayList<>();
 		waters.add(new WaterTile(-50, -50,-6)); //x and z position first two parameters and third is height
 		waters.add(new WaterTile(50, -50, -6)); 
 
-		WaterFrameBuffers fbos = new WaterFrameBuffers();
 		
 		MouseSelector selector = new MouseSelector(camera, renderer.getProjectionMatrix());
 		
 		while(!Display.isCloseRequested()) {
 			//entity.increaseRotation(0, 0.5f, 0);
 			camera.move();
-						
+			
+			GL11.glEnable(GL30.GL_CLIP_DISTANCE0); // enable clipping planes (distance of each vertex from the plane)
+			
 			//selector.update(); //nothing to select at the moment so commented this out
 
 			fbos.bindReflectionFrameBuffer();
-			//renderer.renderScene(entities, terrains, light, camera);
-			fbos.unbindCurrentFrameBuffer();
+			float distance = 2 * (camera.getPosition().y - waters.get(0).getHeight());
+			camera.getPosition().y -= distance;
+			camera.invertPitch();
+			renderer.renderScene(entities, terrains, light, camera, new Vector4f(0, 1, 0 , -waters.get(0).getHeight()));
+			camera.getPosition().y += distance;
+			camera.invertPitch();
 			
-			renderer.renderScene(entities, terrains, light, camera);			
+			fbos.bindRefractionFrameBuffer();
+			renderer.renderScene(entities, terrains, light, camera, new Vector4f(0, -1, 0 , waters.get(0).getHeight()));
+			
+			/*Render to screen*/
+			GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
+			fbos.unbindCurrentFrameBuffer();
+			renderer.renderScene(entities, terrains, light, camera, new Vector4f(0, -1, 0 ,15)); //clip plane is vector4f to tell OpenGL where to start clipping			
+			
 			waterRenderer.render(waters, camera);
 			
 			DisplayManager.updateDisplay();

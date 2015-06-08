@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector4f;
 
 import main.java.gfx.entities.Camera;
 import main.java.gfx.entities.Light;
@@ -26,7 +27,9 @@ public class StaticShader extends ShaderProgram{
 	private int location_useFakeLighting;
 	private int location_numberOfRows;
 	private int location_offset;
+	private int location_plane;
 
+	
 	public StaticShader() {
 		super(VERTEX_FILE, FRAGMENT_FILE);
 	}
@@ -50,7 +53,12 @@ public class StaticShader extends ShaderProgram{
 		location_useFakeLighting = super.getUniformLocation("useFakeLighting");
 		location_numberOfRows = super.getUniformLocation("numberOfRows");
 		location_offset = super.getUniformLocation("offset");
-
+		location_plane = super.getUniformLocation("plane");
+		
+	}
+	
+	public void loadClipPlane(Vector4f plane) {
+		super.loadVector(location_plane, plane);
 	}
 	
 	public void loadNumberOfRows(int n) {
