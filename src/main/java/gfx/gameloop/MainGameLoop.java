@@ -100,8 +100,8 @@ public class MainGameLoop {
 		WaterShader waterShader = new WaterShader();
 		WaterRenderer waterRenderer = new WaterRenderer(loader,waterShader, renderer.getProjectionMatrix(), fbos);
 		List<WaterTile> waters = new ArrayList<>();
-		waters.add(new WaterTile(-50, -50,-6)); //x and z position first two parameters and third is height
-		waters.add(new WaterTile(50, -50, -6)); 
+		waters.add(new WaterTile(-50, -50, 0)); //x and z position first two parameters and third is height
+		waters.add(new WaterTile(50, -50, 0)); 
 
 		
 		MouseSelector selector = new MouseSelector(camera, renderer.getProjectionMatrix());
@@ -118,7 +118,8 @@ public class MainGameLoop {
 			float distance = 2 * (camera.getPosition().y - waters.get(0).getHeight());
 			camera.getPosition().y -= distance;
 			camera.invertPitch();
-			renderer.renderScene(entities, terrains, light, camera, new Vector4f(0, 1, 0 , -waters.get(0).getHeight()));
+			//-waters.getheight would render things above the water but this causes problem with the outline of tiles being rendered onto water
+			renderer.renderScene(entities, terrains, light, camera, new Vector4f(0, 1, 0 , -5)); //-5 clips anything above -5 height so tiles don't get rendered
 			camera.getPosition().y += distance;
 			camera.invertPitch();
 			
