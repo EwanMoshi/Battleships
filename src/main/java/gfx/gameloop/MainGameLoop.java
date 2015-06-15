@@ -51,7 +51,7 @@ public class MainGameLoop {
 		ModelTexture specularTexture = staticModel.getTexture();
 		specularTexture.setShineDamper(15);
 		specularTexture.setReflectivity(0.5f);
-		Entity entity = new Entity(staticModel, new Vector3f(0,0.4f,0),0,0,0,1,data);
+		Entity entity = new Entity(staticModel, new Vector3f(20,0.4f,-40),0,0,0,1,data);
 		//staticModel.getTexture().setHasTransparency(true); //TODO: maybe get rid of this as it turns off back culling
 		
 		/* List of all the entities in the game */
