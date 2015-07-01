@@ -63,7 +63,7 @@ public class MainGameLoop {
 		Entity defaultLook = new Entity(staticModel, new Vector3f(0,20,-45),0,0,0,1,data);
 		Camera camera = new Camera(defaultLook);
 		
-		MasterRenderer renderer = new MasterRenderer();
+		MasterRenderer renderer = new MasterRenderer(loader);
 		
 		/*Grass Model*/
 		TexturedModel grass = new TexturedModel(OBJLoader.loadObjModel("grassModel", loader),  new ModelTexture(loader.loadTexture("grassTexture")));
