@@ -30,18 +30,18 @@ import de.matthiasmann.twl.utils.PNGDecoder;
 import de.matthiasmann.twl.utils.PNGDecoder.Format;
 
 public class Loader {
-	
+
 	private List<Integer> vaos = new ArrayList<Integer>();
 	private List<Integer> vbos = new ArrayList<Integer>();
 	private List<Integer> textures = new ArrayList<Integer>();
-	
-	
+
+
 	/**
 	 * Take positional data about the model, store in a VAO and return information as RawModel
 	 * @param positions
 	 * @param indices
 	 * @return
-	 */	
+	 */
 	public RawModel loadToVAO(float[] positions,float[] textureCoords,float[] normals,int[] indices){
 		int vaoID = createVAO();
 		bindIndicesBuffer(indices);  //bind the indices buffer to the indices
@@ -51,7 +51,7 @@ public class Loader {
 		unbindVAO();
 		return new RawModel(vaoID,indices.length);
 	}
-	
+
 	/**
 	 * Used for rendering a quadrant
 	 * @param positions
@@ -64,16 +64,16 @@ public class Loader {
         unbindVAO();
         return new RawModel(vaoID, positions.length / dimensions);
     }
-	
+
 	public int loadTexture(String fileName) {
 		Texture texture = null;
 		try {
 			texture = TextureLoader.getTexture("PNG", new FileInputStream("res/" + fileName + ".png"));
-			
+
 			/*Tell OpenGL to render textures in distance with lower resolution to make rendering faster*/
 			//GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
 			//GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
-			//GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, -0.3f); //set texture's "level of detail" 
+			//GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, -0.3f); //set texture's "level of detail"
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Tried to load texture " + fileName + ".png , didn't work");
@@ -82,8 +82,8 @@ public class Loader {
 		textures.add(texture.getTextureID());
 		return texture.getTextureID();
 	}
-	
-	
+
+
 	/**
 	 * Loop through all the VAOs and VBOs and delete all the buffers
 	 */
@@ -98,8 +98,8 @@ public class Loader {
 			GL11.glDeleteTextures(texture);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Creates an empty VAO that returns the id of the VAO
 	 * @return
@@ -110,11 +110,11 @@ public class Loader {
 		GL30.glBindVertexArray(vaoID);
 		return vaoID;
 	}
-	
-	
+
+
 	/**
 	 * Stores the data into an attribute list of the VAO
-	 * 
+	 *
 	 * @param attributeNumber - The number of the attribute list that we want to store in
 	 * @param data - the data to store
 	 */
@@ -127,15 +127,15 @@ public class Loader {
 		GL20.glVertexAttribPointer(attributeNumber,coordinateSize,GL11.GL_FLOAT,false,0,0);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 	}
-	
-	
+
+
 	/**
 	 * Unbind the VAO when finished
 	 */
 	private void unbindVAO(){
 		GL30.glBindVertexArray(0);
 	}
-	
+
 	private void bindIndicesBuffer(int[] indices){
 		int vboID = GL15.glGenBuffers();
 		vbos.add(vboID);
@@ -143,18 +143,18 @@ public class Loader {
 		IntBuffer buffer = storeDataInIntBuffer(indices);
 		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
 	}
-	
+
 	private IntBuffer storeDataInIntBuffer(int[] data){
 		IntBuffer buffer = BufferUtils.createIntBuffer(data.length);
 		buffer.put(data);
 		buffer.flip();
 		return buffer;
 	}
-	
+
 	/**
 	 * Converts the float array of data into a FloatBuffer
 	 * @param data - the float array
-	 * @return 
+	 * @return
 	 */
 	private FloatBuffer storeDataInFloatBuffer(float[] data){
 		FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
@@ -182,14 +182,14 @@ public class Loader {
 			System.exit(-1);
 		}
 		return new TextureData(buffer, width, height);
-		
+
 	}
-	
+
 	public int loadCubeMap(String[] textureFiles) {
 		int texID = GL11.glGenTextures();
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, texID);
-		
+
 		/*Loop through all 6 textures*/
 		for(int i = 0; i < textureFiles.length; i++) {
 			TextureData data = decodeTextureFile("res/" + textureFiles[i] + ".png");
@@ -197,14 +197,14 @@ public class Loader {
 		}
 		GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
 		GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-		
+
 		/*Get rid of seams at the edges of the skybox*/
 		GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_WRAP_S, GL12.GL_CLAMP_TO_EDGE);
 		GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_WRAP_T, GL12.GL_CLAMP_TO_EDGE);
-		
+
 		textures.add(texID);
 		return texID;
 	}
-	
+
 
 }

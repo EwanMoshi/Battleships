@@ -1,0 +1,9 @@
+
+name: battleship
+model: battleship.obj
+size: 3x2
+
+
+name: frigate
+model: frigate.obj
+size: 1x3

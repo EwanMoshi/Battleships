@@ -33,45 +33,45 @@ import main.java.gfx.water.WaterTile;
 
 public class MainGameLoop {
 
-	
+
 	public static void main(String[] args) {
 		DisplayManager.createDisplay();
-		
+
 		Loader loader = new Loader();
-		
+
 		/* This is a test, use different verties later for different models  TODO:Read from file */
 		ModelData data = OBJFileLoader.loadOBJ("ship");
 		RawModel shipModel = loader.loadToVAO(data.getVertices(),  data.getTextureCoords(), data.getNormals(), data.getIndices());
-		
+
 		ModelData tileData = OBJFileLoader.loadOBJ("flatTile");
 		RawModel tileModel = loader.loadToVAO(tileData.getVertices(),  tileData.getTextureCoords(), tileData.getNormals(), tileData.getIndices());
-		
+
 		ModelTexture texture = new ModelTexture(loader.loadTexture("Wood 1"));
 		TexturedModel staticModel = new TexturedModel(shipModel, texture);
 		ModelTexture specularTexture = staticModel.getTexture();
 		specularTexture.setShineDamper(15);
 		specularTexture.setReflectivity(0.5f);
 		Entity entity = new Entity(staticModel, new Vector3f(20,0.4f,-40),0,0,0,1,data);
-		//staticModel.getTexture().setHasTransparency(true); //TODO: maybe get rid of this as it turns off back culling
-		
+		//staticModel.getTexture().setHasTransparency(trues); //TODO: maybe get rid of this as it turns off back culling
+
 		/* List of all the entities in the game */
 		List<Entity> entities = new ArrayList<>();
 		entities.add(entity);
-		
+
 		Light light = new Light(new Vector3f(2000,2000,2000), new  Vector3f(1,1,1));
-		
+
 		Entity defaultLook = new Entity(staticModel, new Vector3f(0,20,-45),0,0,0,1,data);
 		Camera camera = new Camera(defaultLook);
-		
+
 		MasterRenderer renderer = new MasterRenderer(loader);
-		
+
 		/*Grass Model*/
 		TexturedModel grass = new TexturedModel(OBJLoader.loadObjModel("grassModel", loader),  new ModelTexture(loader.loadTexture("grassTexture")));
 		Entity grassEntity = new Entity(grass, new Vector3f(0,0,0),0,0,0,0.1f,OBJFileLoader.loadOBJ("grassModel"));
 		grass.getTexture().setHasTransparency(true);
 		grass.getTexture().setUseFakeLighting(true);
 		//entities.add(grassEntity);
-		
+
 		//********************** Terrain Model ****************************/
 		Terrain terrain = new Terrain(0,0,loader,new ModelTexture(loader.loadTexture("mud")), "heightMap");
 		//terrain.getTexture().setHasTransparency(true); //set transparency true if the texture has transparency
@@ -80,12 +80,12 @@ public class MainGameLoop {
 		List<Terrain> terrains = new ArrayList<>();
 		terrains.add(terrain);
 		terrains.add(terrain2);
-		
-		
+
+
 		//********************** GRID FOR THE BOARD ***********************/
 		ModelTexture t = new ModelTexture(loader.loadTexture("tile")); //these 2 must be
-		TexturedModel gridTile = new TexturedModel(tileModel, t);      //outside for loop to increase performance!	
-		gridTile.getTexture().setHasTransparency(true); 
+		TexturedModel gridTile = new TexturedModel(tileModel, t);      //outside for loop to increase performance!
+		gridTile.getTexture().setHasTransparency(true);
 		for(int i = -10; i < 10; i++) {
 			for(int j = -10; j < 0; j++) { //100 covers all almost
 				Entity gridTileEntity = new Entity(gridTile, 0, new Vector3f(i*10.5f+5,4,j*10.5f+5),0,0,0, 1);
@@ -93,7 +93,7 @@ public class MainGameLoop {
 			}
 		}
 		//****************************************************************//
-		
+
 		WaterFrameBuffers fbos = new WaterFrameBuffers();
 
 		//****************** Setup the Water Renderer ********************//
@@ -101,17 +101,17 @@ public class MainGameLoop {
 		WaterRenderer waterRenderer = new WaterRenderer(loader,waterShader, renderer.getProjectionMatrix(), fbos);
 		List<WaterTile> waters = new ArrayList<>();
 		waters.add(new WaterTile(-50, -50, 0)); //x and z position first two parameters and third is height
-		waters.add(new WaterTile(50, -50, 0)); 
+		waters.add(new WaterTile(50, -50, 0));
 
-		
+
 		MouseSelector selector = new MouseSelector(camera, renderer.getProjectionMatrix());
-		
+
 		while(!Display.isCloseRequested()) {
 			//entity.increaseRotation(0, 0.5f, 0);
 			camera.move();
-			
+
 			GL11.glEnable(GL30.GL_CLIP_DISTANCE0); // enable clipping planes (distance of each vertex from the plane)
-			
+
 			//selector.update(); //nothing to select at the moment so commented this out
 
 			fbos.bindReflectionFrameBuffer();
@@ -122,20 +122,20 @@ public class MainGameLoop {
 			renderer.renderScene(entities, terrains, light, camera, new Vector4f(0, 1, 0 , -5)); //-5 clips anything above -5 height so tiles don't get rendered
 			camera.getPosition().y += distance;
 			camera.invertPitch();
-			
+
 			fbos.bindRefractionFrameBuffer();
 			renderer.renderScene(entities, terrains, light, camera, new Vector4f(0, -1, 0 , waters.get(0).getHeight()));
-			
+
 			/*Render to screen*/
 			GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 			fbos.unbindCurrentFrameBuffer();
-			renderer.renderScene(entities, terrains, light, camera, new Vector4f(0, -1, 0 ,15)); //clip plane is vector4f to tell OpenGL where to start clipping			
-			
+			renderer.renderScene(entities, terrains, light, camera, new Vector4f(0, -1, 0 ,15)); //clip plane is vector4f to tell OpenGL where to start clipping
+
 			waterRenderer.render(waters, camera);
-			
+
 			DisplayManager.updateDisplay();
 		}
-		
+
 		/* Cleaning up after game is closed */
 		fbos.cleanUp();
 		renderer.cleanUp(); //clean up the renderer
