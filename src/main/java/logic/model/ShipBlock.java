@@ -8,14 +8,14 @@ public class ShipBlock {
 
 	// Fields.
 	// ------------------------------------------------------------
-	private final Ship ship;
+	private final ShipInfo ship;
 	private boolean destroyed;
 
 	
 	// Constructors.
 	// ------------------------------------------------------------
 	
-	public ShipBlock (Ship ship) {
+	public ShipBlock (ShipInfo ship) {
 		this.ship = null;
 		this.destroyed = false;
 	}
@@ -39,7 +39,7 @@ public class ShipBlock {
 		this.destroyed = true;
 	}
 	
-	protected Ship getShip () {
+	protected ShipInfo getShip () {
 		return this.ship;
 	}
 	
