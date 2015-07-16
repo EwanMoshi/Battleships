@@ -7,15 +7,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
 
-import main.java.logic.model.Ship;
+import main.java.logic.model.ShipInfo;
 
 public class Parser {
 
 	private Parser() {}
 
-	private static Map<String, Ship> shipDB;
+	private static Map<String, ShipInfo> shipInfoDB;
 
-	private static Ship parseShip (String name, BufferedReader br)
+	private static ShipInfo parseShip (String name, BufferedReader br)
 	throws IOException {
 
 		// Null every attribute.
@@ -46,14 +46,14 @@ public class Parser {
 		}
 
 		// Check every attribute has been declared.
-		if (model == null || width == null || length == null) {
+		if (model == null || width == null || length == null)
 			throw new IOException("Not every attribute has been declared for the ship " + name);
-		}
 
-		return new Ship(model, width, length);
+		// Create and return specified ShipInfo class.
+		return new ShipInfo(model, width, length);
 	}
 
-	private static void LoadShipDB (String fname)
+	private static void LoadShipInfoDB (String fname)
 	throws IOException {
 		File file = new File(fname);
 		FileReader fr = new FileReader(file);
@@ -64,14 +64,14 @@ public class Parser {
 			String[] attribs = line.split(":");
 			if (attribs[0].equals("name")) {
 				String name = attribs[1];
-				shipDB.put(name, parseShip(name, br));
+				shipInfoDB.put(name, parseShip(name, br));
 			}
 		}
 	}
 
-	public static Ship LoadShip(String name) throws IOException {
-		if (shipDB == null) LoadShipDB("res" + File.separatorChar + "ships.craigml");
-		Ship ship = shipDB.get(name);
+	public static ShipInfo LoadShipInfo(String name) throws IOException {
+		if (shipInfoDB == null) LoadShipInfoDB("res" + File.separatorChar + "ships.craigml");
+		ShipInfo ship = shipInfoDB.get(name);
 		if (ship == null) throw new IOException("No ship called " + name + " to load.");
 		return ship;
 	}
