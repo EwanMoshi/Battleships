@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import main.java.logic.model.ShipInfo;
@@ -25,9 +26,13 @@ public class Parser {
 
 		// Parse each attribute which appears in declaration.
 		String line;
-		while ((line=br.readLine()) != null) {
-
-			if (line.isEmpty()) continue;
+		
+		while (true) {
+		
+			line = br.readLine();
+			if (line == null || line.isEmpty()) break;
+			
+			line = line.replaceAll("\\s", ""); // remove whitespace.
 			String[] attribs = line.split(":");
 			String attrib = attribs[0];
 
@@ -58,9 +63,11 @@ public class Parser {
 		File file = new File(fname);
 		FileReader fr = new FileReader(file);
 		BufferedReader br = new BufferedReader(fr);
+		shipInfoDB = new HashMap<>();
 		String line = null;
 		while ((line=br.readLine()) != null) {
 			if (line.isEmpty()) continue;
+			line = line.replaceAll("\\s", ""); // remove meaningless whitespace.
 			String[] attribs = line.split(":");
 			if (attribs[0].equals("name")) {
 				String name = attribs[1];
@@ -70,7 +77,7 @@ public class Parser {
 	}
 
 	public static ShipInfo LoadShipInfo(String name) throws IOException {
-		if (shipInfoDB == null) LoadShipInfoDB("res" + File.separatorChar + "ships.craigml");
+		if (shipInfoDB == null) LoadShipInfoDB("data" + File.separatorChar + "ships.craigml");
 		ShipInfo ship = shipInfoDB.get(name);
 		if (ship == null) throw new IOException("No ship called " + name + " to load.");
 		return ship;

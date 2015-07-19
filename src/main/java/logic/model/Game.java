@@ -127,6 +127,12 @@ public class Game {
 		
 	}
 
+	public ShipPiece[] board (Player pl) {
+		for (int i = 0; i < players.length; i++) {
+			if (players[i] == pl) return boards[i];
+		}
+		return null;
+	}
 	
 
 	// Internal helper methods.

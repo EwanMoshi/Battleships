@@ -23,4 +23,8 @@ public class ShipInfo {
 		this.modelName = modelName;
 	}
 	
+	public String toString() {
+		return ""+modelName.charAt(0);
+	}
+	
 }
