@@ -4,7 +4,7 @@ public class ShipPiece {
 
 	private final ShipInfo shipInfo;
 	private final boolean[] health;
-	
+
 	public ShipPiece (ShipInfo shipinfo) {
 		this.shipInfo = shipinfo;
 		this.health = new boolean[shipinfo.width*shipinfo.length];
@@ -14,7 +14,7 @@ public class ShipPiece {
 			}
 		}
 	}
-	
+
 	/**
 	 * Check if any part of this ShipPiece is damaged.
 	 * @return boolean
@@ -27,7 +27,7 @@ public class ShipPiece {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Damage a specific part of this ShipPiece. Return false if that piece was already damaged.
 	 * @param rowWidth: how far across from the ship's origin to attack.
@@ -40,5 +40,9 @@ public class ShipPiece {
 		health[row*col + col] = false;
 		return true;
 	}
-	
+
+	public String toString() {
+		return shipInfo.toString();
+	}
+
 }

@@ -1,9 +1,12 @@
 
+name: carrier
+model: carrier.obj
+size: 1x5
+
 name: battleship
 model: battleship.obj
-size: 3x2
-
-
-name: frigate
-model: frigate.obj
 size: 1x3
+
+name: destroyer
+model: destroyer.obj
+size: 1x2
