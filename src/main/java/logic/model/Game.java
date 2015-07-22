@@ -101,28 +101,31 @@ public class Game {
 	 * @param col: where to place piece on the board.
 	 * @return true if piece was placed; false otherwise.
 	 */
-	public boolean placePiece (Player player, ShipInfo ship2place, int row, int col) {
+	public boolean placePiece (Player player, ShipInfo ship2place, int row, int col, Orientation o) {
 
 		// Check if you're in the set up phase. Get the appropriate board.
 		if (this.gamePhase != GamePhase.SETUP) return false;
 		ShipPiece[] board = myBoard(player);
 
+		// TODO: take orientation into account.
+		// If the orientation is right, do what's here now.
+		// If the orientation is down, transpose row and col.
+		// If the orientation is left, fill in backwards (move the row back by SHIP_WIDTH amount)
+		// If the orientation is up, transpose both row and fill in backwards.
+
+		// Check you can place the ship.
 		for (int i = row; i < row + ship2place.width; i++) {
-
 			if (i < 0 || i >= Game.BOARD_WIDTH) return false;
-
 			for (int j = col; j < col + ship2place.length; j++) {
 				// Check for out of bounds.
-
 				if (j < 0 || j >= Game.BOARD_WIDTH) return false;
-
 				// Check if another piece is already here.
 				if (board[i*BOARD_WIDTH + j] != null) return false;
 			}
 		}
 
 		// Make a new ShipPiece. Place it at the location.
-		ShipPiece piece = new ShipPiece(ship2place);
+		ShipPiece piece = new ShipPiece(ship2place, o);
 		for (int i = row; i < row + ship2place.width; i++) {
 			for (int j = col; j < col + ship2place.length; j++) {
 				int pos = i*BOARD_WIDTH + j;

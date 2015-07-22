@@ -57,9 +57,11 @@ public class GameMainTest {
 	}
 
 	private static void placeShip (int playerIndex, ShipInfo ship) {
-		
 		Player player = players[playerIndex];
 		ShipPiece[] board = game.board(player);
+
+		Orientation orient = Orientation.RIGHT;
+
 		System.out.println("== PLAYER " + playerIndex);
 		while (true) {
 
@@ -67,12 +69,29 @@ public class GameMainTest {
 			drawBoard(board);
 			String description = ship.modelName + "("+ship.width + " x " + ship.length + ")";
 			System.out.println("Your turn to place, " + player + ". Please place your " + description + "\n");
-			System.out.println("type \"l\" or \"r\" to rotate your ship.\n");
+			System.out.println("Type \"l\" or \"r\" to rotate your ship.\n");
 
 			// Check for malformed input.
 			String[] line = scan.nextLine().split(" ");
+
+			// Rotating ship.
+			if (line.length == 1) {
+				String rotate = line[0];
+				if (rotate.equals("l")) {
+					System.out.println("Rotated left.");
+					orient = Orientation.rotateLeft(orient);
+				}
+				else if (rotate.equals("r")) {
+					System.out.println("Rotated right.");
+					orient = Orientation.rotateRight(orient);
+				}
+				else System.err.println("Unrecognised command. Type \"l\" or \"r\" to rotate your ship.\n");
+				continue;
+			}
+
+			// Validate input for placing ship.
 			if (line.length != 2 || !isNum(line[0]) || !isNum(line[1])) {
-				System.out.println("Bad input. Please enter like so \"ROW COL\" where ROW and COL are numbers.");
+				System.err.println("Bad input. Please enter like so \"ROW COL\" where ROW and COL are numbers.");
 				continue;
 			}
 
@@ -80,13 +99,13 @@ public class GameMainTest {
 			int row = Integer.parseInt(line[0]);
 			int col = Integer.parseInt(line[1]);
 			if (row < 0 || col < 0 || row >= Game.BOARD_WIDTH || col >= Game.BOARD_WIDTH) {
-				System.out.println("Specified location is out of bounds of game board.");
+				System.err.println("Specified location is out of bounds of game board.");
 				continue;
 			}
 
 			// Check if something in the way.
 			if (!game.placePiece(player, ship, row, col)) {
-				System.out.println("Could not place at specified location. Try again.");
+				System.err.println("Could not place at specified location. Try again.");
 				continue;
 			}
 

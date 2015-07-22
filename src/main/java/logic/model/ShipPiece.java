@@ -5,7 +5,7 @@ public class ShipPiece {
 	private final ShipInfo shipInfo;
 	private final boolean[] health;
 
-	public ShipPiece (ShipInfo shipinfo) {
+	public ShipPiece (ShipInfo shipinfo, Orientation orientation) {
 		this.shipInfo = shipinfo;
 		this.health = new boolean[shipinfo.width*shipinfo.length];
 		for (int i = 0; i < shipinfo.width; i++) {
