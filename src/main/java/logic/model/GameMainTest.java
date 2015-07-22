@@ -57,6 +57,7 @@ public class GameMainTest {
 	}
 
 	private static void placeShip (int playerIndex, ShipInfo ship) {
+		
 		Player player = players[playerIndex];
 		ShipPiece[] board = game.board(player);
 		System.out.println("== PLAYER " + playerIndex);
@@ -66,6 +67,7 @@ public class GameMainTest {
 			drawBoard(board);
 			String description = ship.modelName + "("+ship.width + " x " + ship.length + ")";
 			System.out.println("Your turn to place, " + player + ". Please place your " + description + "\n");
+			System.out.println("type \"l\" or \"r\" to rotate your ship.\n");
 
 			// Check for malformed input.
 			String[] line = scan.nextLine().split(" ");
