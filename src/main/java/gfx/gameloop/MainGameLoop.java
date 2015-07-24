@@ -29,6 +29,7 @@ import main.java.gfx.water.WaterFrameBuffers;
 import main.java.gfx.water.WaterRenderer;
 import main.java.gfx.water.WaterShader;
 import main.java.gfx.water.WaterTile;
+import main.java.physics.Raycast.RayCast;
 
 
 public class MainGameLoop {
@@ -112,8 +113,13 @@ public class MainGameLoop {
 
 			GL11.glEnable(GL30.GL_CLIP_DISTANCE0); // enable clipping planes (distance of each vertex from the plane)
 
-			//selector.update(); //nothing to select at the moment so commented this out
-
+			
+			/**********MOUSE******************/
+			selector.update(); //nothing to select at the moment so commented this out
+			Entity collision = RayCast.isColliding(selector.getCurrentRay(), entities);
+			System.out.println("X: " + collision.getPosition().x + "Y: " + collision.getPosition().y + "Z: " + collision.getPosition().z);
+			/***********************************/
+			
 			fbos.bindReflectionFrameBuffer();
 			float distance = 2 * (camera.getPosition().y - waters.get(0).getHeight());
 			camera.getPosition().y -= distance;
