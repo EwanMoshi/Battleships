@@ -1,5 +1,7 @@
 package main.java.physics.Raycast;
 
+import main.java.gfx.entities.Entity;
+
 import org.lwjgl.util.vector.Vector3f;
 
 public class RayCast {
@@ -15,9 +17,11 @@ public class RayCast {
 	/**
 	 * Check if the current ray is colliding with any real objects
 	 * @param ray - the ray we are checking
-	 * @return
+	 * @return Entity that ray collides with, or null if no collision
 	 */
-	public static boolean isColliding(Vector3f ray) {
-		return false;
+	public static Entity isColliding(Vector3f ray) {
+		
+		return null;
 	}
+
 }
