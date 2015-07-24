@@ -1,5 +1,8 @@
 package main.java.gfx.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import main.java.gfx.models.TexturedModel;
 import main.java.gfx.objConverter.ModelData;
 
@@ -16,6 +19,9 @@ public class Entity {
 		
 	private BoundingSphere boundingSphere;
 	
+	private List<Entity> allEntities = new ArrayList();
+	
+
 	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale, ModelData data) {
 		this.model = model;
 		this.position = position;
@@ -121,6 +127,18 @@ public class Entity {
 		this.scale = scale;
 	}
 
+	public List<Entity> getAllEntities() {
+		return allEntities;
+	}
+
+	public void addEntity(Entity entity) {
+		this.allEntities.add(entity);
+	}
+	
+	public void setAllEntities(List<Entity> allEntities) {
+		this.allEntities = allEntities;
+	}
+	
 	/**
 	 * Return the bounding sphere of this entity.
 	 * @return BoundingSphere
