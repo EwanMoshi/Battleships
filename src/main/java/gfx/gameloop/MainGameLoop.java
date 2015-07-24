@@ -117,7 +117,9 @@ public class MainGameLoop {
 			/**********MOUSE******************/
 			selector.update(); //nothing to select at the moment so commented this out
 			Entity collision = RayCast.isColliding(selector.getCurrentRay(), entities);
-			//System.out.println("X: " + collision.getPosition().x + "Y: " + collision.getPosition().y + "Z: " + collision.getPosition().z);
+			if(collision != null) {
+				System.out.println("X: " + collision.getPosition().x + "Y: " + collision.getPosition().y + "Z: " + collision.getPosition().z);
+			}
 			/***********************************/
 			
 			fbos.bindReflectionFrameBuffer();
