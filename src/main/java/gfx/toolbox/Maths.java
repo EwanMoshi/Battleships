@@ -29,4 +29,48 @@ public class Maths {
 		return viewMatrix;
 	}
 
+	/**
+	 * Compute the vector orthogonal to the projection vector of the first on the second.
+	 * This is the x vector in the diagram below:
+	 *
+	 *     /\
+	 *     /x
+	 *    / x
+	 *   /  x
+	 *  /   x
+	 *  ----------->
+	 *
+	 * @param first: vector doing the projecting.
+	 * @param second: vector being projected onto.
+	 * @return the vector
+	 */
+	public static Vector3f OrthongonalProjection (Vector3f first, Vector3f second) {
+		Vector3f projection = ProjectionOnto(first, second);
+		return Vector3f.sub(first, projection, null);
+	}
+	
+	/**
+	 * Compute a vector which is in the direction of the second vector with length equal to the
+	 * projection of the first vector onto the second.
+	 * @param first: vector doing the projecting.
+	 * @param second: vector being projected onto
+	 * @return the vector 
+	 */
+	public static Vector3f ProjectionOnto (Vector3f first, Vector3f second) {
+		float lengthOfProjection = Vector3f.dot(first, second) / Magnitude(second);
+		Vector3f normalised = null;
+		second.normalise(normalised);
+		return (Vector3f) normalised.scale(lengthOfProjection); // I'm not sure about this casting.... Aaron
+	}
+
+	/**
+	 * Return the magnitude of a vector = sqrt(x^2 + y^2 + z^2)
+	 * @param vector: vector whose magnitude you're taking
+	 * @return double
+	 */
+	public static float Magnitude (Vector3f vector) {
+		return (float) Math.sqrt(Vector3f.dot(vector, vector));
+	}
+
+	
 }
