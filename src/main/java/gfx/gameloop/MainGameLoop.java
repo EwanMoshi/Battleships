@@ -57,7 +57,7 @@ public class MainGameLoop {
 
 		/* List of all the entities in the game */
 		List<Entity> entities = new ArrayList<>();
-		entities.add(entity);
+		//entities.add(entity);
 
 		Light light = new Light(new Vector3f(2000,2000,2000), new  Vector3f(1,1,1));
 
@@ -89,7 +89,7 @@ public class MainGameLoop {
 		gridTile.getTexture().setHasTransparency(true);
 		for(int i = -10; i < 10; i++) {
 			for(int j = -10; j < 0; j++) { //100 covers all almost
-				Entity gridTileEntity = new Entity(gridTile, 0, new Vector3f(i*10.5f+5,4,j*10.5f+5),0,0,0, 1);
+				Entity gridTileEntity = new Entity(gridTile,new Vector3f(i*10.5f+5,4,j*10.5f+5), 0, 0, 0, 1, tileData);
 				entities.add(gridTileEntity);
 			}
 		}
@@ -117,7 +117,7 @@ public class MainGameLoop {
 			/**********MOUSE******************/
 			selector.update(); //nothing to select at the moment so commented this out
 			Entity collision = RayCast.isColliding(selector.getCurrentRay(), entities);
-			System.out.println("X: " + collision.getPosition().x + "Y: " + collision.getPosition().y + "Z: " + collision.getPosition().z);
+			//System.out.println("X: " + collision.getPosition().x + "Y: " + collision.getPosition().y + "Z: " + collision.getPosition().z);
 			/***********************************/
 			
 			fbos.bindReflectionFrameBuffer();
