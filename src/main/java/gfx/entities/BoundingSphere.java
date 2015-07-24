@@ -74,16 +74,4 @@ public class BoundingSphere {
 		return dist <= this.radiusSquared;
 	}
 	
-	/**
-	 * Return the centre of the sphere.
-	 * @return Vector3f
-	 */
-	public Vector3f getPosition () {
-		return this.centre;
-	}
-	
-	public final float radiusSquared () {
-		return this.radiusSquared;
-	}
-	
 }

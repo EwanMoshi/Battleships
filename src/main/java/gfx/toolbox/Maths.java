@@ -60,8 +60,7 @@ public class Maths {
 	 */
 	public static Vector3f ProjectionOnto (Vector3f first, Vector3f second) {
 		float lengthOfProjection = Vector3f.dot(first, second) / Magnitude(second);
-		Vector3f normalised = null;
-		second.normalise(normalised);
+		Vector3f normalised = second.normalise(null);
 		return (Vector3f) normalised.scale(lengthOfProjection); // I'm not sure about this casting.... Aaron
 	}
 
