@@ -1,6 +1,6 @@
 package main.java.physics.Raycast;
 
-import main.java.gfx.entities.Entity;
+import main.java.gfx.entities.BoundingSphere;
 
 import org.lwjgl.util.vector.Vector3f;
 
@@ -19,9 +19,14 @@ public class RayCast {
 	 * @param ray - the ray we are checking
 	 * @return Entity that ray collides with, or null if no collision
 	 */
-	public static Entity isColliding(Vector3f ray) {
-		
-		return null;
+	public static boolean isColliding(Vector3f ray, float[] vertices) {
+		return false;
 	}
-
+	
+	private static boolean colliding (Vector3f ray, BoundingSphere sphere) {
+		
+		
+		return true;
+	}
+	
 }
