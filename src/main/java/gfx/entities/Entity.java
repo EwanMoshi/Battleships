@@ -121,4 +121,12 @@ public class Entity {
 		this.scale = scale;
 	}
 
+	/**
+	 * Return the bounding sphere of this entity.
+	 * @return BoundingSphere
+	 */
+	public BoundingSphere boundingSphere() {
+		return this.boundingSphere;
+	}
+
 }
